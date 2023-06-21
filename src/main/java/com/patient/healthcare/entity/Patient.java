@@ -1,10 +1,16 @@
 package com.patient.healthcare.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,7 +18,18 @@ import jakarta.persistence.Table;
 public class Patient {
 	@Id
 	@Column(name = "patient_id")
-	private Integer patientId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "paitent_seq")
+	@SequenceGenerator(sequenceName = "paitent_seq", allocationSize = 1, name = "paitent_seq")
+		private Integer patientId;
+	@Column(name = "is_active")
+
+	private boolean isActive;
+	public boolean getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 	public Integer getPatientId() {
 		return patientId;
 	}
@@ -50,6 +67,7 @@ public class Patient {
 		this.mobile = mobile;
 	}
 	@Column(name = "first_name")
+	@JsonProperty("firstName")
 	private String firstName;
 	@Column(name = "middle_name")
 	private String middleName;
